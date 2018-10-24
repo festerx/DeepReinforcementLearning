@@ -1,4 +1,3 @@
-
 from utils import setup_logger
 from settings import run_folder
 
@@ -10,7 +9,9 @@ LOGGER_DISABLED = {
 , 'memory':False
 , 'tourney':False
 , 'mcts':False
-, 'model': False}
+, 'model':False
+, 'time_track':False
+, 'error_track':False}
 
 
 logger_mcts = setup_logger('logger_mcts', run_folder + 'logs/logger_mcts.log')
@@ -27,4 +28,9 @@ logger_memory.disabled = LOGGER_DISABLED['memory']
 
 logger_model = setup_logger('logger_model', run_folder + 'logs/logger_model.log')
 logger_model.disabled = LOGGER_DISABLED['model']
- 
+
+logger_error_track = setup_logger('logger_error_track', run_folder + 'logs/logger_error_track.log')
+logger_model.disabled = LOGGER_DISABLED['error_track']
+
+logger_time_track = setup_logger('logger_time_track', run_folder + 'logs/logger_time_track.log')
+logger_model.disabled = LOGGER_DISABLED['time_track']

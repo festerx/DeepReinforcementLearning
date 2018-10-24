@@ -15,6 +15,8 @@ import matplotlib.pyplot as plt
 from IPython import display
 import pylab as pl
 
+import time
+
 
 class User():
 	def __init__(self, name, state_size, action_size):
@@ -52,6 +54,8 @@ class Agent():
 		self.val_overall_loss = []
 		self.val_value_loss = []
 		self.val_policy_loss = []
+
+		self.predictTime = 0.0
 
 	
 	def simulate(self):
@@ -105,9 +109,13 @@ class Agent():
 
 	def get_preds(self, state):
 		#predict the leaf
+		#t1 = time.perf_counter() * 1000
 		inputToModel = np.array([self.model.convertToModelInput(state)])
 
+
 		preds = self.model.predict(inputToModel)
+
+
 		value_array = preds[0]
 		logits_array = preds[1]
 		value = value_array[0]
@@ -123,6 +131,9 @@ class Agent():
 		#SOFTMAX
 		odds = np.exp(logits)
 		probs = odds / np.sum(odds) ###put this just before the for?
+
+		#t2 = time.perf_counter() * 1000
+		#self.predictTime = self.predictTime + t2 - t1
 
 		return ((value, probs, allowedActions))
 
@@ -215,7 +226,9 @@ class Agent():
 		self.model.printWeightAverages()
 
 	def predict(self, inputToModel):
+
 		preds = self.model.predict(inputToModel)
+
 		return preds
 
 	def buildMCTS(self, state):
